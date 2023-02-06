@@ -1,0 +1,16 @@
+.navbar_cancel_button {
+  padding: 0.4rem 1.7rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--primary-color);
+  background-color: transparent;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  transition: var(--primary-transition);
+  &:hover {
+    scale: 1.05;
+    color: var(--secondary-color);
+  }
+}
