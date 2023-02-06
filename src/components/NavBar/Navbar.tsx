@@ -63,10 +63,9 @@ const Navbar = () => {
             className="kanban_board_elements"
             ref={boardRef}
             style={{
-              height: displayBoard ? "8.5rem" : "0px",
+              height: displayBoard ? boardRef.current?.scrollHeight : "0px",
               overflow: "hidden",
-              transition: "all 250ms ease-in-out",
-              backgroundColor: "red",
+              transition: "height 0.5s ease-out",
             }}
           >
             {data &&
