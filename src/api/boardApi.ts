@@ -29,7 +29,7 @@ export const boardApi = createApi({
     }),
     deleteBoard: builder.mutation({
       query: (id: number) => ({
-        url: `/${id}`,
+        url: `?id=${id}`,
         method: "DELETE",
       }),
     }),

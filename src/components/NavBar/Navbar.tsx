@@ -6,12 +6,23 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import NavbarAdd from "../Buttons/NavbarAdd/NavbarAdd";
 import NavbarCancel from "../Buttons/NavbarCancel/NavbarCancel";
-import { useAddBoardMutation, useGetBoardsQuery } from "../../api/boardApi";
+import {
+  useAddBoardMutation,
+  useDeleteBoardMutation,
+  useGetBoardsQuery,
+  useUpdateBoardMutation,
+} from "../../api/boardApi";
 import { Board } from "../../interfaces/ApiTypes";
+import EditIcon from "@mui/icons-material/Edit";
+import ClearIcon from "@mui/icons-material/Clear";
+import Tooltip from "@mui/material/Tooltip";
+import DoneIcon from "@mui/icons-material/Done";
 
 const Navbar = () => {
-  const { data, isSuccess } = useGetBoardsQuery(null);
+  const { data, isSuccess, refetch } = useGetBoardsQuery(null);
   const [addKanbanBoard] = useAddBoardMutation();
+  const [deleteKanbanBoard] = useDeleteBoardMutation();
+  const [updateKanban] = useUpdateBoardMutation();
   const containerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
   const [displayBoard, setDisplayBoard] = useState(false);
@@ -20,15 +31,39 @@ const Navbar = () => {
   const [hideNavBar, setHideNavBar] = useState(false);
   const [kanbanName, setKanbanName] = useState("");
   const [error, setError] = useState(false);
+  const [editKanban, setEditKanban] = useState<number>(-1);
+  const [displayDeleteButtons, setDisplayDeleteButtons] = useState<number>();
+  const [updatedKanbanBoardName, setUpdatedKanbanBoardName] = useState("");
+  const [boards, setBoards] = useState<Board[]>();
 
   const createKanban = () => {
     addKanbanBoard({ name: kanbanName });
+    refetch();
+    setKanbanName("");
   };
 
   const cancelKanbanCreation = () => {
     setKanbanName("");
     setAddBoard(false);
   };
+
+  const handleDeleteBoard = (id: number) => {
+    deleteKanbanBoard(id);
+    setDisplayDeleteButtons(-1);
+    refetch();
+  };
+  const handleUpdateBoard = (id: number) => {
+    updateKanban({ name: updatedKanbanBoardName, id: id });
+    refetch();
+    setUpdatedKanbanBoardName("");
+    setEditKanban(-1);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setBoards(data);
+    }
+  }, [data, isSuccess, kanbanName]);
 
   useEffect(() => {
     kanbanName.length > 20 ? setError(true) : setError(false);
@@ -68,10 +103,76 @@ const Navbar = () => {
               transition: "height 0.5s ease-out",
             }}
           >
-            {data &&
-              data.map((board: Board) => (
+            {boards &&
+              boards.map((board: Board) => (
                 <div className="kanban_element" key={board.id}>
-                  <p>{board.name}</p>
+                  <div className="kanban_element_name_actions">
+                    <p className="kanban_element_name">{board.name}</p>
+                    {!hideNavBar && (
+                      <div className="kanban_element_actions">
+                        {displayDeleteButtons === board.id! ? (
+                          <>
+                            <Tooltip title="Delete">
+                              <DoneIcon
+                                className="kanbban_element_actions_approve"
+                                onClick={() => handleDeleteBoard(board.id!)}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              title="Cancel"
+                              onClick={() => setDisplayDeleteButtons(-1)}
+                            >
+                              <ClearIcon className="kanbban_element_actions_delete" />
+                            </Tooltip>
+                          </>
+                        ) : editKanban === board.id! ? (
+                          <>
+                            <Tooltip title="Edit">
+                              <DoneIcon
+                                className="kanbban_element_actions_approve"
+                                onClick={() => handleUpdateBoard(board.id!)}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              title="Cancel"
+                              onClick={() => setEditKanban(-1)}
+                            >
+                              <ClearIcon className="kanbban_element_actions_delete" />
+                            </Tooltip>
+                          </>
+                        ) : (
+                          <>
+                            <Tooltip title="Edit">
+                              <EditIcon
+                                className="kanbban_element_actions_edit"
+                                onClick={() =>
+                                  editKanban === -1
+                                    ? setEditKanban(board.id!)
+                                    : setEditKanban(-1)
+                                }
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              title="Delete"
+                              onClick={() => setDisplayDeleteButtons(board.id!)}
+                            >
+                              <ClearIcon className="kanbban_element_actions_delete" />
+                            </Tooltip>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {editKanban === board.id! && (
+                    <div className="kaban_element_edit_input">
+                      <input
+                        value={updatedKanbanBoardName}
+                        onChange={(e) =>
+                          setUpdatedKanbanBoardName(e.target.value)
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
           </div>
