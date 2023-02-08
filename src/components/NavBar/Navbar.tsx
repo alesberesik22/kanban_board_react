@@ -17,8 +17,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import Tooltip from "@mui/material/Tooltip";
 import DoneIcon from "@mui/icons-material/Done";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { data, isSuccess, refetch } = useGetBoardsQuery(null);
   const [addKanbanBoard] = useAddBoardMutation();
   const [deleteKanbanBoard] = useDeleteBoardMutation();
@@ -105,7 +107,11 @@ const Navbar = () => {
           >
             {boards &&
               boards.map((board: Board) => (
-                <div className="kanban_element" key={board.id}>
+                <div
+                  className="kanban_element"
+                  key={board.id}
+                  onClick={() => navigate(`/kanban/${board.id!}`)}
+                >
                   <div className="kanban_element_name_actions">
                     <p className="kanban_element_name">{board.name}</p>
                     {!hideNavBar && (

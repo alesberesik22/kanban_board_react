@@ -11,6 +11,7 @@ export interface Column {
 }
 export interface Board {
   id?: number;
-  name: string;
+  name?: string;
+  description?: string;
   columns?: Column[];
 }

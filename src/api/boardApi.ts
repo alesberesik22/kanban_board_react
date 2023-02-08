@@ -11,7 +11,10 @@ export const boardApi = createApi({
       query: () => "",
     }),
     getBoard: builder.query({
-      query: (id: number) => `/${id}`,
+      query: (id: number) => ({
+        url: `/${id}`,
+        params: { id: id },
+      }),
     }),
     addBoard: builder.mutation({
       query: (board: Board) => ({
