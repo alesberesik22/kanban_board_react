@@ -1,0 +1,17 @@
+.add_column_modal_button {
+  padding: 0.3rem 1rem;
+  background-color: var(--primary-color);
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: var(--primary-transition);
+  &:hover {
+    scale: 1.05;
+    background-color: var(--secondary-color);
+  }
+}

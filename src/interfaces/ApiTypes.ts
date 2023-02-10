@@ -3,10 +3,12 @@ export interface Task {
   name: string;
   description: string;
   sequence: number;
+  columnId:number;
 }
 export interface Column {
   id?: number;
   name: string;
+  boardId:number;
   tasks?: Task[];
 }
 export interface Board {

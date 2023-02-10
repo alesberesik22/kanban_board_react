@@ -1,0 +1,20 @@
+.kanban_header_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  outline: none;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: var(--primary-transition);
+  cursor: pointer;
+  &:hover {
+    scale: 1.05;
+    background-color: var(--secondary-color);
+  }
+}

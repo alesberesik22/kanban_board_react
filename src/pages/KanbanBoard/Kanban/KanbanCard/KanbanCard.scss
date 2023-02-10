@@ -1,0 +1,19 @@
+.kanban_card{
+  user-select: none;
+  padding: 16px;
+  margin: 0 0 20px 0;
+  min-height: 120px;
+  background-color: white;
+  border-radius: 7px;
+  border: 1.5px solid rgba(155, 155, 170, 0.25);
+  transition: var(--primary-transition);
+  box-shadow: 0 0 white;
+  &:hover{
+    box-shadow: var(--primary-box-shadow);
+  }
+}
+.dragging {
+  transition: var(--primary-transition);
+  scale: 1.05;
+  background-color: rgb(208, 208, 210);
+}

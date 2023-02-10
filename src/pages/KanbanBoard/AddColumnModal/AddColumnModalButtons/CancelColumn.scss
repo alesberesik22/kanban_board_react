@@ -1,0 +1,17 @@
+.cancel_column_modal_button {
+  padding: 0.3rem 1rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--primary-color);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: var(--primary-transition);
+  border-radius: 5px;
+  &:hover {
+    scale: 1.05;
+    box-shadow: var(--primary-box-shadow);
+  }
+}
