@@ -14,17 +14,6 @@ interface props {
     setAddTaskColumn: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
-interface itemsType {
-    id: number;
-    content: string;
-}
-
-interface ColumnType {
-    name: string;
-    id: number;
-    tasks: itemsType[];
-}
-
 const KanbanColumn: React.FC<props> = ({column, id, setAddTask, setAddTaskColumn}) => {
     return (
         <div className="kanban_content_column" key={id}>

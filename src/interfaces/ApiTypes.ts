@@ -4,6 +4,7 @@ export interface Task {
   description: string;
   sequence: number;
   columnId:number;
+  priority?:string
 }
 export interface Column {
   id?: number;

@@ -16,7 +16,7 @@ const KanbanBoard = () => {
     const {data, isSuccess, refetch} = useGetBoardQuery(Number(id!));
     const [kabanBoardValues, setKabanBoardValues] = useState<Board>();
     const [displayAddColumnKanban, setDisplayAddColumnKanban] = useState(false);
-    console.log(data);
+    const [newTaskUpdate, setNewTaskUpdate] = useState(false);
 
     useEffect(() => {
         if (isSuccess) {
@@ -26,18 +26,20 @@ const KanbanBoard = () => {
 
     useEffect(() => {
         refetch()
-    }, [displayAddColumnKanban,kabanBoardValues])
+    }, [displayAddColumnKanban, kabanBoardValues, newTaskUpdate])
 
-    useEffect(()=>{
+    useEffect(() => {
         setKabanBoardValues(data);
-    },[data,isSuccess])
+    }, [data, isSuccess])
 
     return (
         <div className="kanban_board">
             <KanbanBoardHeader kabanBoardValues={kabanBoardValues} setKabanBoardValues={setKabanBoardValues}/>
             <div className="kaban_board_content_container">
                 <KanbanHeader setDisplayAddColumnKanban={setDisplayAddColumnKanban}/>
-                <Kanban kanbanBoard={kabanBoardValues?.columns!}/>
+                {data && (
+                    <Kanban kanbanBoard={kabanBoardValues?.columns!} setNewTaskUpdate={setNewTaskUpdate} id={kabanBoardValues?.id!}/>
+                )}
             </div>
             {displayAddColumnKanban && (
                 <AddColumnModal

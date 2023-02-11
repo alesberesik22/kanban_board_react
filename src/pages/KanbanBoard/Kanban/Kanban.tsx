@@ -1,59 +1,54 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Kanban.scss";
 import {
     DragDropContext,
-    Droppable,
-    Draggable,
     DropResult,
 } from "react-beautiful-dnd";
 import KanbanColumn from "./KanbanColumn/KanbanColumn";
 import AddTaskModal from "./AddTaskModal/AddTaskModal";
 import {Column} from "../../../interfaces/ApiTypes";
+import useMaxSequence from "../../../components/CustomHooks/useMaxSequence";
+import {useUpdateBoardMutation} from "../../../api/boardApi";
 
 interface props {
-    kanbanBoard:Column[]
+    kanbanBoard: Column[]
+    setNewTaskUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    id: number;
 }
 
-
-const itemsFromBackend = [
-    {
-        id: 0,
-        content: "First task",
-    },
-    {
-        id: 1,
-        content: "Second task",
-    },
-];
-
-const columnsFromBackend = [
-    {
-        name: "Todo",
-        tasks: itemsFromBackend,
-        id: 2,
-    },
-    {
-        name: "Second",
-        tasks: [],
-        id: 5,
-    },
-];
-
-const Kanban:React.FC<props> = ({kanbanBoard}) => {
-    console.log(kanbanBoard);
+const Kanban: React.FC<props> = ({kanbanBoard, setNewTaskUpdate, id}) => {
     const [addTask, setAddTask] = useState(false);
     const [addTaskColumn, setAddTaskColumn] = useState<number | undefined>();
-    const [columns, setColumns] = useState(columnsFromBackend);
+    const [changedColumnTasks, setChangedColumnTasks] = useState(false);
+    const [columns, setColumns] = useState(kanbanBoard);
+    const [updateBoard] = useUpdateBoardMutation();
+
+    //custom hooks
+    const maxSequence = useMaxSequence(columns, addTaskColumn!);
+
+    useEffect(() => {
+        if (changedColumnTasks) {
+            updateBoard({id: id, columns: columns})
+            setChangedColumnTasks(false);
+        }
+    }, [changedColumnTasks])
+
+    useEffect(() => {
+        setColumns(kanbanBoard);
+    }, [kanbanBoard])
+
+    useEffect(() => {
+        setNewTaskUpdate(addTask);
+    }, [addTask])
+
     const onDragEnd = (result: DropResult) => {
         if (!result.destination) return;
         const {source, destination} = result;
         if (source.droppableId !== destination.droppableId) {
             const sourceColumn = columns.find(column => column.id === Number(source.droppableId))!;
-            console.log(sourceColumn);
             const destColumn = columns.find(column => column.id === Number(destination?.droppableId))!;
-            console.log(destColumn);
-            const sourceItems = [...sourceColumn.tasks];
-            const destItems = [...destColumn.tasks];
+            const sourceItems = [...sourceColumn.tasks!];
+            const destItems = [...destColumn.tasks!];
             const [removed] = sourceItems.splice(source.index, 1);
             destItems.splice(destination.index, 0, removed);
             setColumns(
@@ -61,13 +56,23 @@ const Kanban:React.FC<props> = ({kanbanBoard}) => {
                     if (column.id === Number(source.droppableId)) {
                         return {
                             ...column,
-                            tasks: sourceItems,
+                            tasks: sourceItems.map((task) => {
+                                return {
+                                    ...task,
+                                    columnId: column.id
+                                }
+                            }),
                         };
                     }
                     if (column.id === Number(destination.droppableId)) {
                         return {
                             ...column,
-                            tasks: destItems,
+                            tasks: destItems.map((task) => {
+                                return {
+                                    ...task,
+                                    columnId: column.id
+                                }
+                            }),
                         };
                     }
                     return column;
@@ -75,7 +80,7 @@ const Kanban:React.FC<props> = ({kanbanBoard}) => {
             );
         } else {
             const column = columns.find(column => column.id === Number(source.droppableId))!;
-            const copiedItems = [...column.tasks];
+            const copiedItems = [...column.tasks!];
             const [removed] = copiedItems.splice(source.index, 1);
             copiedItems.splice(destination.index, 0, removed);
             setColumns(
@@ -90,13 +95,15 @@ const Kanban:React.FC<props> = ({kanbanBoard}) => {
                 })
             );
         }
+        setChangedColumnTasks(true);
     };
+
 
     return (
         <div className="kanban_content">
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
-                {kanbanBoard &&
-                    kanbanBoard.map((column, id) => {
+                {columns &&
+                    columns.map((column, id) => {
                         return (
                             <KanbanColumn column={column} id={id} setAddTask={setAddTask}
                                           setAddTaskColumn={setAddTaskColumn}/>
@@ -104,7 +111,8 @@ const Kanban:React.FC<props> = ({kanbanBoard}) => {
                     })}
             </DragDropContext>
             {addTask && (
-                <AddTaskModal open={addTask} setOpen={setAddTask} addTaskColumnId={addTaskColumn}/>
+                <AddTaskModal open={addTask} setOpen={setAddTask} addTaskColumnId={addTaskColumn}
+                              sequence={maxSequence!}/>
             )}
         </div>
     );
