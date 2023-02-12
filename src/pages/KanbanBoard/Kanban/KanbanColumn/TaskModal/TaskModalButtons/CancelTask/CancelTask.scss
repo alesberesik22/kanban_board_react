@@ -1,0 +1,15 @@
+.cancel_task_button {
+  padding: 0.3rem 1rem;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+  color: var(--primary-color);
+  background-color: transparent;
+  transition: var(--primary-transition);
+  cursor: pointer;
+  &:hover{
+    scale: 1.05;
+  }
+}

@@ -3,12 +3,16 @@ import './KanbanCard.scss'
 import {Draggable} from "react-beautiful-dnd";
 
 interface Props {
-    content:string;
-    columnId:number;
-    index:number;
+    content: string;
+    columnId: number;
+    index: number;
+    description: string;
+    priority: string;
+    setDisplayTask: React.Dispatch<React.SetStateAction<boolean>>;
+    setClickedTask: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
-const KanbanCard:React.FC<Props> = (props) => (
+const KanbanCard: React.FC<Props> = (props) => (
     <Draggable
         key={props.columnId}
         draggableId={String(props.columnId)}
@@ -24,8 +28,16 @@ const KanbanCard:React.FC<Props> = (props) => (
                         ...provided.draggableProps.style,
                     }}
                     className={`kanban_card ${snapshot.isDragging && "dragging"}`}
+                    onClick={() => {
+                        props.setClickedTask(props.columnId);
+                        props.setDisplayTask(true);
+                    }}
                 >
-                    {props.content}
+                    <div className={`kanban_card_priority ${props.priority === "HIGH" ? "high"
+                        : props.priority === "MEDIUM" ? "medium"
+                            : "low"}`}/>
+                    <h2 className={"kanban_card_header"}>{props.content}</h2>
+                    <p className={"kanban_card_descripotion"}>{props.description}</p>
                 </div>
             );
         }}

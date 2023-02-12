@@ -38,7 +38,10 @@ const KanbanBoard = () => {
             <div className="kaban_board_content_container">
                 <KanbanHeader setDisplayAddColumnKanban={setDisplayAddColumnKanban}/>
                 {data && (
-                    <Kanban kanbanBoard={kabanBoardValues?.columns!} setNewTaskUpdate={setNewTaskUpdate} id={kabanBoardValues?.id!}/>
+                    <Kanban kanbanBoard={kabanBoardValues?.columns!} setNewTaskUpdate={setNewTaskUpdate}
+                            id={kabanBoardValues?.id!}
+                            kanbanName={kabanBoardValues?.name!} kanbanDescription={kabanBoardValues?.description!}
+                    />
                 )}
             </div>
             {displayAddColumnKanban && (

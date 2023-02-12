@@ -19,7 +19,6 @@ const AddTaskModal: React.FC<props> = (props) => {
     const [taskPriority, setTaskPriority] = useState("LOW");
     const [containsData, setContainsData] = useState(false);
     const [addTask] = useAddTaskMutation();
-    console.log(props.sequence)
     const handleClose = () => {
         props.setOpen(false);
     }

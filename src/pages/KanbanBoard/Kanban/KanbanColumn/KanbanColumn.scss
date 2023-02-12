@@ -7,49 +7,57 @@
   flex-direction: column;
   box-shadow: 0 0 white;
   min-height: 500px;
-  gap:1rem;
+  gap: 1rem;
   transition: var(--primary-transition);
-  &:hover{
-    .kanban_content_column_container_header{
-      .kanban_content_column_container_header_actions{
-        .kanban_content_column_container_header_actions_edit{
+
+  &:hover {
+    .kanban_content_column_container_header {
+      .kanban_content_column_container_header_actions {
+        .kanban_content_column_container_header_actions_edit {
           color: greenyellow;
         }
-        .kanban_content_column_container_header_actions_delete{
+
+        .kanban_content_column_container_header_actions_delete {
           color: red;
         }
       }
     }
   }
-  .kanban_content_column_container_header{
+
+  .kanban_content_column_container_header {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    h2{
+
+    h2 {
       color: var(--secondary-color);
     }
-    .kanban_content_column_container_header_actions{
+
+    .kanban_content_column_container_header_actions {
       width: 20%;
       display: flex;
-      align-items: center ;
+      align-items: center;
       justify-content: flex-end;
       flex-direction: row;
       gap: 0.5rem;
-      .kanban_content_column_container_header_actions_edit, .kanban_content_column_container_header_actions_delete{
+
+      .kanban_content_column_container_header_actions_edit, .kanban_content_column_container_header_actions_delete {
         font-size: 20px;
-        color:transparent;
+        color: transparent;
         transition: var(--primary-transition);
         cursor: pointer;
       }
-      .kanban_content_column_container_header_actions_edit{
-        &:hover{
+
+      .kanban_content_column_container_header_actions_edit {
+        &:hover {
           scale: 1.3;
         }
       }
-      .kanban_content_column_container_header_actions_delete{
-        &:hover{
+
+      .kanban_content_column_container_header_actions_delete {
+        &:hover {
           scale: 1.3;
         }
       }

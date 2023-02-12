@@ -9,14 +9,20 @@ import AddTaskModal from "./AddTaskModal/AddTaskModal";
 import {Column} from "../../../interfaces/ApiTypes";
 import useMaxSequence from "../../../components/CustomHooks/useMaxSequence";
 import {useUpdateBoardMutation} from "../../../api/boardApi";
+import useUpdateColumns from "../../../components/CustomHooks/useUpdateColumns";
 
 interface props {
     kanbanBoard: Column[]
     setNewTaskUpdate: React.Dispatch<React.SetStateAction<boolean>>;
     id: number;
+    kanbanName: string;
+    kanbanDescription: string;
 }
 
-const Kanban: React.FC<props> = ({kanbanBoard, setNewTaskUpdate, id}) => {
+const Kanban: React.FC<props> = ({
+                                     kanbanBoard, setNewTaskUpdate, id,
+                                     kanbanName, kanbanDescription
+                                 }) => {
     const [addTask, setAddTask] = useState(false);
     const [addTaskColumn, setAddTaskColumn] = useState<number | undefined>();
     const [changedColumnTasks, setChangedColumnTasks] = useState(false);
@@ -25,13 +31,8 @@ const Kanban: React.FC<props> = ({kanbanBoard, setNewTaskUpdate, id}) => {
 
     //custom hooks
     const maxSequence = useMaxSequence(columns, addTaskColumn!);
-
-    useEffect(() => {
-        if (changedColumnTasks) {
-            updateBoard({id: id, columns: columns})
-            setChangedColumnTasks(false);
-        }
-    }, [changedColumnTasks])
+    const updateColumns = useUpdateColumns(changedColumnTasks, id, columns, kanbanName,
+        kanbanDescription, setChangedColumnTasks)
 
     useEffect(() => {
         setColumns(kanbanBoard);
@@ -59,7 +60,8 @@ const Kanban: React.FC<props> = ({kanbanBoard, setNewTaskUpdate, id}) => {
                             tasks: sourceItems.map((task) => {
                                 return {
                                     ...task,
-                                    columnId: column.id
+                                    columnId: column.id,
+                                    sequence: index
                                 }
                             }),
                         };
@@ -67,10 +69,11 @@ const Kanban: React.FC<props> = ({kanbanBoard, setNewTaskUpdate, id}) => {
                     if (column.id === Number(destination.droppableId)) {
                         return {
                             ...column,
-                            tasks: destItems.map((task) => {
+                            tasks: destItems.map((task, index) => {
                                 return {
                                     ...task,
-                                    columnId: column.id
+                                    columnId: column.id,
+                                    sequence: index
                                 }
                             }),
                         };
@@ -88,7 +91,13 @@ const Kanban: React.FC<props> = ({kanbanBoard, setNewTaskUpdate, id}) => {
                     if (columnElement.id === Number(source.droppableId)) {
                         return {
                             ...columnElement,
-                            tasks: copiedItems,
+                            tasks: copiedItems.map((task, index) => {
+                                return {
+                                    ...task,
+                                    sequence: index
+                                }
+                            }),
+
                         };
                     }
                     return columnElement;

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './KanbanColumn.scss'
 import {Droppable} from "react-beautiful-dnd";
 import KanbanCard from "../KanbanCard/KanbanCard";
@@ -6,6 +6,7 @@ import ColumnAddTask from "./ColumnAddTask/ColumnAddTask";
 import {Column, Task} from "../../../../interfaces/ApiTypes";
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
+import TaskModal from "./TaskModal/TaskModal";
 
 interface props {
     column: Column;
@@ -15,6 +16,8 @@ interface props {
 }
 
 const KanbanColumn: React.FC<props> = ({column, id, setAddTask, setAddTaskColumn}) => {
+    const [displayTask, setDisplayTask] = useState(false);
+    const [clickedTaskId, setClickedTaskId] = useState<number>();
     return (
         <div className="kanban_content_column" key={id}>
             <div className={"kanban_content_column_container"}>
@@ -35,7 +38,10 @@ const KanbanColumn: React.FC<props> = ({column, id, setAddTask, setAddTaskColumn
                             >
                                 {column && column.tasks!.map((tasks: Task, index: number) => (
 
-                                    <KanbanCard content={tasks.name} columnId={tasks.id!} index={index} key={index}/>
+                                    <KanbanCard content={tasks.name} columnId={tasks.id!}
+                                                index={index} key={index}
+                                                description={tasks.description} priority={tasks.priority!}
+                                                setDisplayTask={setDisplayTask} setClickedTask={setClickedTaskId}/>
                                 ))}
                                 {provided.placeholder}
                             </div>
@@ -44,6 +50,9 @@ const KanbanColumn: React.FC<props> = ({column, id, setAddTask, setAddTaskColumn
                 </Droppable>
             </div>
             <ColumnAddTask setAddTask={setAddTask} id={column.id!} setAddTaskColumn={setAddTaskColumn}/>
+            {displayTask && (
+                <TaskModal open={displayTask} setOpen={setDisplayTask} id={clickedTaskId!}/>
+            )}
         </div>
     )
 };

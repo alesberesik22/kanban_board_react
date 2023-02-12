@@ -1,13 +1,35 @@
+$height:140px;
 .kanban_card{
   user-select: none;
   padding: 16px;
   margin: 0 0 20px 0;
-  min-height: 120px;
+  height: $height;
   background-color: white;
   border-radius: 7px;
   border: 1.5px solid rgba(155, 155, 170, 0.25);
   transition: var(--primary-transition);
   box-shadow: 0 0 white;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  .kanban_card_header{
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    color: var(--third-color);
+  }
+  .kanban_card_descripotion{
+    width: 100%;
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* start showing ellipsis when 3rd line is reached */
+    white-space: pre-wrap; /* let the text wrap preserving spaces */
+    overflow: hidden;
+  }
   &:hover{
     box-shadow: var(--primary-box-shadow);
   }
@@ -16,4 +38,22 @@
   transition: var(--primary-transition);
   scale: 1.05;
   background-color: rgb(208, 208, 210);
+}
+.kanban_card_priority{
+  position: absolute;
+  height: $height - 3;
+  width: 4px;
+  left: 0;
+  top: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.high{
+  background-color: red;
+}
+.medium{
+  background-color: orange;
+}
+.low {
+  background-color: greenyellow;
 }
