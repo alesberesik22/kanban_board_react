@@ -2,21 +2,25 @@ import React, {FormEvent, useEffect, useState} from 'react';
 import './TaskModal.scss'
 import Modal from "@mui/material/Modal/Modal";
 import Box from "@mui/material/Box/Box";
-import {useGetTaskQuery, useUpdateTaskMutation} from "../../../../../api/taskApi";
-import {Task} from "../../../../../interfaces/ApiTypes";
+import {useDeleteTaskMutation, useGetTaskQuery, useUpdateTaskMutation} from "../../../../../api/taskApi";
+import {Column, Task} from "../../../../../interfaces/ApiTypes";
 import UpdateTask from "./TaskModalButtons/UpdateTask/UpdateTask";
 import CancelTask from "./TaskModalButtons/CancelTask/CanceLTask";
+import ClearIcon from '@mui/icons-material/Clear';
+import {useUpdateColumnMutation} from "../../../../../api/columnApi";
 
 interface props {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     id: number;
+    column:Column;
 }
 
 const TaskModal: React.FC<props> = (props) => {
     const {data, isFetching} = useGetTaskQuery(props.id);
     const [task, setTask] = useState<Task>();
     const [updateTask] = useUpdateTaskMutation();
+    const [updateColumnMutation] = useUpdateColumnMutation()
 
     useEffect(() => {
         if (!isFetching) {
@@ -33,14 +37,22 @@ const TaskModal: React.FC<props> = (props) => {
         event.preventDefault();
         console.log(task);
     }
-
+    const handleDelete = () => {
+        let updatedColumn = {...props.column};
+        updatedColumn.tasks = updatedColumn.tasks?.filter(task=>task.id !== props.id);
+        updateColumnMutation(updatedColumn);
+    }
+    console.log(props.column)
     return (
         <Modal open={props.open} onClose={handleClose}>
             <Box className={"taskModal"}>
                 {task && (
                     <form className={"taskModal_container"} onSubmit={(e) => handleSubmit(e)}>
-                        <input className={"taskModal_container_input"} value={task.name}
-                               onChange={(e) => setTask({...task, name: e.target.value})}/>
+                        <div className={"taskModal_container_header"}>
+                            <input className={"taskModal_container_input"} value={task.name}
+                                   onChange={(e) => setTask({...task, name: e.target.value})}/>
+                            <ClearIcon className={"taskModal_container_header_delete"} onClick={handleDelete} type={"deleteTask"}/>
+                        </div>
                         <textarea className={"taskModal_container_textarea"} value={task.description} onChange={(e) => {
                             setTask({...task, description: e.target.value})
                         }}/>

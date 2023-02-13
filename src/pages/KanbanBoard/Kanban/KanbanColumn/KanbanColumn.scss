@@ -6,7 +6,7 @@
   justify-content: flex-start;
   flex-direction: column;
   box-shadow: 0 0 white;
-  min-height: 500px;
+  height: 750px;
   gap: 1rem;
   transition: var(--primary-transition);
 
@@ -81,7 +81,7 @@
     .kanban_content_column_tasks {
       padding: 0.5rem 1rem;
       width: 100%;
-      min-height: 500px;
+      height: 750px;
     }
   }
 }

@@ -112,7 +112,7 @@ const Kanban: React.FC<props> = ({
         <div className="kanban_content">
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
                 {columns &&
-                    columns.map((column, id) => {
+                    columns.slice().sort((a, b) => (a.id! > b.id!) ? 1 : -1).map((column, id) => {
                         return (
                             <KanbanColumn column={column} id={id} setAddTask={setAddTask}
                                           setAddTaskColumn={setAddTaskColumn}/>
