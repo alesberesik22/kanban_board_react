@@ -5,6 +5,8 @@ import Box from "@mui/material/Box/Box";
 import AddColumns from "../../../AddColumnModal/AddColumnModalButtons/AddColumns";
 import CancelColumn from "../../../AddColumnModal/AddColumnModalButtons/CancelColumn";
 import {useDeleteColumnMutation} from "../../../../../api/columnApi";
+import {useDispatch} from "react-redux";
+import {setRefetch} from "../../../../../redux/slices/ReduxStoreSlice";
 
 interface props {
     open:boolean;
@@ -14,7 +16,8 @@ interface props {
 }
 
 const DeleteColumnModal:React.FC<props> = (props) => {
-    const [deleteColumnMutation] = useDeleteColumnMutation()
+    const [deleteColumnMutation] = useDeleteColumnMutation();
+    const dispatch = useDispatch();
 
     const handleClose = () => {
         props.setOpen(false);
@@ -22,6 +25,7 @@ const DeleteColumnModal:React.FC<props> = (props) => {
 
     const handleDeleteColumn = () => {
         deleteColumnMutation(props.id)
+        dispatch(setRefetch(true));
     }
 
     return (

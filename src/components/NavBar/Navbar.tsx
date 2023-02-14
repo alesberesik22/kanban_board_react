@@ -19,7 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DoneIcon from "@mui/icons-material/Done";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {setFullscreen} from "../../redux/slices/ReduxStoreSlice";
+import {setFullscreen, setRefetch} from "../../redux/slices/ReduxStoreSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -32,7 +32,6 @@ const Navbar = () => {
   const [displayBoard, setDisplayBoard] = useState(false);
   const [angle, setAngle] = useState(0);
   const [addBoard, setAddBoard] = useState(false);
-  // const [hideNavBar, setHideNavBar] = useState(false);
   const [kanbanName, setKanbanName] = useState("");
   const [error, setError] = useState(false);
   const [editKanban, setEditKanban] = useState<number>(-1);
@@ -41,12 +40,14 @@ const Navbar = () => {
   const [boards, setBoards] = useState<Board[]>();
 
   const fullScreen = useSelector((state:any) => state.reduxStoreSlice.fullscreen);
+  const refetchData = useSelector((state:any) => state.reduxStoreSlice.refetch);
   const dispatch = useDispatch();
 
   const createKanban = () => {
     addKanbanBoard({ name: kanbanName });
     refetch();
     setKanbanName("");
+    dispatch(setRefetch(true))
   };
 
   const cancelKanbanCreation = () => {
@@ -58,10 +59,12 @@ const Navbar = () => {
     deleteKanbanBoard(id);
     setDisplayDeleteButtons(-1);
     refetch();
+    dispatch(setRefetch(true))
   };
   const handleUpdateBoard = (id: number) => {
     updateKanban({ name: updatedKanbanBoardName, id: id });
     refetch();
+    dispatch(setRefetch(true))
     setUpdatedKanbanBoardName("");
     setEditKanban(-1);
   };
@@ -75,6 +78,13 @@ const Navbar = () => {
   useEffect(() => {
     kanbanName.length > 20 ? setError(true) : setError(false);
   }, [kanbanName]);
+
+  useEffect(()=> {
+    if(refetch){
+      refetch();
+      dispatch(setRefetch(false))
+    }
+  },[refetchData])
 
   return (
     <div className={`navbar ${fullScreen ? "full-width" : "small-width"}`}>
@@ -194,7 +204,7 @@ const Navbar = () => {
           <div
             className="add_kanban"
             onClick={() => {
-              dispatch(setFullscreen(!fullScreen))
+              dispatch(setFullscreen(true))
               setAddBoard((prev) => !prev);
             }}
           >
