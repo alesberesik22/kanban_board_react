@@ -8,6 +8,8 @@ import UpdateTask from "./TaskModalButtons/UpdateTask/UpdateTask";
 import CancelTask from "./TaskModalButtons/CancelTask/CanceLTask";
 import ClearIcon from '@mui/icons-material/Clear';
 import {useUpdateColumnMutation} from "../../../../../api/columnApi";
+import {useDispatch} from "react-redux";
+import {setRefetch} from "../../../../../redux/slices/ReduxStoreSlice";
 
 interface props {
     open: boolean;
@@ -21,6 +23,7 @@ const TaskModal: React.FC<props> = (props) => {
     const [task, setTask] = useState<Task>();
     const [updateTask] = useUpdateTaskMutation();
     const [updateColumnMutation] = useUpdateColumnMutation()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!isFetching) {
@@ -30,19 +33,18 @@ const TaskModal: React.FC<props> = (props) => {
 
     const handleClose = () => {
         props.setOpen(false);
-        updateTask(task!);
     }
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(task);
+        updateTask(task!);
+        dispatch(setRefetch(true));
     }
     const handleDelete = () => {
         let updatedColumn = {...props.column};
         updatedColumn.tasks = updatedColumn.tasks?.filter(task=>task.id !== props.id);
         updateColumnMutation(updatedColumn);
     }
-    console.log(props.column)
     return (
         <Modal open={props.open} onClose={handleClose}>
             <Box className={"taskModal"}>

@@ -18,6 +18,8 @@ import ClearIcon from "@mui/icons-material/Clear";
 import Tooltip from "@mui/material/Tooltip";
 import DoneIcon from "@mui/icons-material/Done";
 import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setFullscreen} from "../../redux/slices/ReduxStoreSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -30,13 +32,16 @@ const Navbar = () => {
   const [displayBoard, setDisplayBoard] = useState(false);
   const [angle, setAngle] = useState(0);
   const [addBoard, setAddBoard] = useState(false);
-  const [hideNavBar, setHideNavBar] = useState(false);
+  // const [hideNavBar, setHideNavBar] = useState(false);
   const [kanbanName, setKanbanName] = useState("");
   const [error, setError] = useState(false);
   const [editKanban, setEditKanban] = useState<number>(-1);
   const [displayDeleteButtons, setDisplayDeleteButtons] = useState<number>();
   const [updatedKanbanBoardName, setUpdatedKanbanBoardName] = useState("");
   const [boards, setBoards] = useState<Board[]>();
+
+  const fullScreen = useSelector((state:any) => state.reduxStoreSlice.fullscreen);
+  const dispatch = useDispatch();
 
   const createKanban = () => {
     addKanbanBoard({ name: kanbanName });
@@ -72,11 +77,11 @@ const Navbar = () => {
   }, [kanbanName]);
 
   return (
-    <div className={`navbar ${!hideNavBar ? "full-width" : "small-width"}`}>
+    <div className={`navbar ${fullScreen ? "full-width" : "small-width"}`}>
       <div className="navbar_container">
         <div className="logo">
           <img src={logo} alt="logo" className="logo_img" />
-          {!hideNavBar && <h2>Kanban app</h2>}
+          {fullScreen && <h2>Kanban app</h2>}
         </div>
         <div className="kanban_boards">
           {isSuccess && (
@@ -87,7 +92,7 @@ const Navbar = () => {
               }}
               className="boards_header"
             >
-              {!hideNavBar && `All boards (${data.length})`}
+              {fullScreen && `All boards (${data.length})`}
               <ArrowDropDownIcon
                 style={{
                   transform: `rotate(${angle}deg)`,
@@ -114,7 +119,7 @@ const Navbar = () => {
                 >
                   <div className="kanban_element_name_actions">
                     <p className="kanban_element_name">{board.name}</p>
-                    {!hideNavBar && (
+                    {fullScreen && (
                       <div className="kanban_element_actions">
                         {displayDeleteButtons === board.id! ? (
                           <>
@@ -189,12 +194,12 @@ const Navbar = () => {
           <div
             className="add_kanban"
             onClick={() => {
-              setHideNavBar(false);
+              dispatch(setFullscreen(!fullScreen))
               setAddBoard((prev) => !prev);
             }}
           >
             <p>+</p>
-            {!hideNavBar && <p>Add board</p>}
+            {fullScreen && <p>Add board</p>}
           </div>
           <div
             className="add_board"
@@ -229,12 +234,12 @@ const Navbar = () => {
           className="hide_nav_bar"
           onClick={() => {
             setAddBoard(false);
-            setHideNavBar((prev) => !prev);
+            dispatch(setFullscreen(!fullScreen))
           }}
         >
           <p>
-            {!hideNavBar ? <VisibilityOffIcon /> : <VisibilityIcon />}
-            {!hideNavBar && "Hide Navbar"}
+            {fullScreen ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            {fullScreen && "Hide Navbar"}
           </p>
         </div>
       </div>

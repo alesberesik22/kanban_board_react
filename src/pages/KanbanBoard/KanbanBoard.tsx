@@ -10,6 +10,8 @@ import Kanban from "./Kanban/Kanban";
 import KanbanHeader from "./KanbanHeader/KanbanHeader";
 import AddColumnModal from "./AddColumnModal/AddColumnModal";
 import KanbanBoardHeader from "../KanbanBoardHeader/KanbanBoardHeader";
+import {useDispatch, useSelector} from "react-redux";
+import {setRefetch} from "../../redux/slices/ReduxStoreSlice";
 
 const KanbanBoard = () => {
     const {id} = useParams();
@@ -18,6 +20,11 @@ const KanbanBoard = () => {
     const [displayAddColumnKanban, setDisplayAddColumnKanban] = useState(false);
     const [newTaskUpdate, setNewTaskUpdate] = useState(false);
 
+    const fullScreen = useSelector((state: any) => state.reduxStoreSlice.fullscreen);
+    const refetchData = useSelector((state: any) => state.reduxStoreSlice.refetch);
+    const dispatch = useDispatch();
+    console.log(refetchData)
+
     useEffect(() => {
         if (isSuccess) {
             setKabanBoardValues(data);
@@ -25,15 +32,20 @@ const KanbanBoard = () => {
     }, [data, isSuccess]);
 
     useEffect(() => {
-        refetch()
-    }, [displayAddColumnKanban, kabanBoardValues, newTaskUpdate])
+        refetch();
+        if (refetchData) {
+            refetch();
+            console.log("som tu");
+            dispatch(setRefetch(false))
+        }
+    }, [displayAddColumnKanban, kabanBoardValues, newTaskUpdate, refetchData])
 
     useEffect(() => {
         setKabanBoardValues(data);
     }, [data, isSuccess])
 
     return (
-        <div className="kanban_board">
+        <div className={`kanban_board ${fullScreen ? 'minimalized' : 'fullScreen'}`}>
             <KanbanBoardHeader kabanBoardValues={kabanBoardValues} setKabanBoardValues={setKabanBoardValues}/>
             <div className="kaban_board_content_container">
                 <KanbanHeader setDisplayAddColumnKanban={setDisplayAddColumnKanban}/>

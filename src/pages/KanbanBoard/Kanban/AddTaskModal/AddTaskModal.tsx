@@ -5,6 +5,8 @@ import Box from "@mui/material/Box/Box";
 import AddColumns from "../../AddColumnModal/AddColumnModalButtons/AddColumns";
 import CancelColumn from "../../AddColumnModal/AddColumnModalButtons/CancelColumn";
 import {useAddTaskMutation} from "../../../../api/taskApi";
+import {useDispatch} from "react-redux";
+import {setRefetch} from "../../../../redux/slices/ReduxStoreSlice";
 
 interface props {
     open: boolean;
@@ -19,6 +21,9 @@ const AddTaskModal: React.FC<props> = (props) => {
     const [taskPriority, setTaskPriority] = useState("LOW");
     const [containsData, setContainsData] = useState(false);
     const [addTask] = useAddTaskMutation();
+
+    const dispatch = useDispatch();
+
     const handleClose = () => {
         props.setOpen(false);
     }
@@ -32,6 +37,7 @@ const AddTaskModal: React.FC<props> = (props) => {
             sequence: props.sequence,
             priority:taskPriority,
         })
+        dispatch(setRefetch(true));
         setTaskName("");
         setTaskDescription("");
         setTaskPriority("LOW");

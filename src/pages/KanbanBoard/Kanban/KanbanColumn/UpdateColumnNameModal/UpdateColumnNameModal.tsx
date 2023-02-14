@@ -6,6 +6,8 @@ import {Column} from "../../../../../interfaces/ApiTypes";
 import AddColumns from "../../../AddColumnModal/AddColumnModalButtons/AddColumns";
 import CancelColumn from "../../../AddColumnModal/AddColumnModalButtons/CancelColumn";
 import {useUpdateColumnMutation} from "../../../../../api/columnApi";
+import {useDispatch} from "react-redux";
+import {setRefetch} from "../../../../../redux/slices/ReduxStoreSlice";
 
 interface props {
     open: boolean;
@@ -16,14 +18,16 @@ interface props {
 const UpdateColumnNameModal: React.FC<props> = (props) => {
     const [column, setColumn] = useState(props.column);
     const [updateColumnMutation] = useUpdateColumnMutation()
+    const dispatch = useDispatch();
+
     const handleClose = () => {
         props.setOpen(false)
     }
 
     const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(column);
         updateColumnMutation(column);
+        dispatch(setRefetch(true));
     }
 
     return (
