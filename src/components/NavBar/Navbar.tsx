@@ -89,7 +89,7 @@ const Navbar = () => {
   return (
     <div className={`navbar ${fullScreen ? "full-width" : "small-width"}`}>
       <div className="navbar_container">
-        <div className="logo">
+        <div className="logo" onClick={()=> navigate("/")}>
           <img src={logo} alt="logo" className="logo_img" />
           {fullScreen && <h2>Kanban app</h2>}
         </div>
