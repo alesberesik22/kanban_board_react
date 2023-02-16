@@ -28,6 +28,9 @@
 .fullScreen{
   width: 94.5%;
 }
-.minimalized{
-  width: 80%;
+
+@media screen and(max-width: 1300px) {
+  .kanban_board{
+    padding: 3rem 2rem;
+  }
 }

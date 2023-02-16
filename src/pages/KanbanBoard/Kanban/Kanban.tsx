@@ -53,15 +53,15 @@ const Kanban: React.FC<props> = ({
             const [removed] = sourceItems.splice(source.index, 1);
             destItems.splice(destination.index, 0, removed);
             setColumns(
-                columns.map((column: any, index: number) => {
+                columns.map((column: any) => {
                     if (column.id === Number(source.droppableId)) {
                         return {
                             ...column,
-                            tasks: sourceItems.map((task) => {
+                            tasks: sourceItems.map((task,idx) => {
                                 return {
                                     ...task,
                                     columnId: column.id,
-                                    sequence: index
+                                    sequence: idx
                                 }
                             }),
                         };
@@ -115,7 +115,7 @@ const Kanban: React.FC<props> = ({
                     columns.slice().sort((a, b) => (a.id! > b.id!) ? 1 : -1).map((column, id) => {
                         return (
                             <KanbanColumn column={column} id={id} setAddTask={setAddTask}
-                                          setAddTaskColumn={setAddTaskColumn}/>
+                                          setAddTaskColumn={setAddTaskColumn} key={column.id}/>
                         );
                     })}
             </DragDropContext>

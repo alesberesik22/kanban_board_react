@@ -1,5 +1,6 @@
 $line-color: #9b9baa25;
 $text-color: #9b9baa;
+$box-shadow:rgba(0, 0, 0, 0.24) 0px 3px 8px;
 .kanban_board_header {
   width: 100%;
   display: flex;
@@ -48,10 +49,13 @@ $text-color: #9b9baa;
       font-size: 24px;
       letter-spacing: 0.03em;
       background-color: transparent;
-      padding: 20px 10px;
+      padding: 30px 10px;
+      border-radius: 5px;
+      transition: var(--primary-transition);
 
       &:not([disabled]) {
-        box-shadow: var(--primary-box-shadow);
+        box-shadow: $box-shadow;
+        scale: 1.05;
       }
     }
 
@@ -104,9 +108,11 @@ $text-color: #9b9baa;
       background-color: transparent;
       transition: var(--primary-transition);
       padding: 20px 10px;
+      border-radius: 5px;
 
       &:not([disabled]) {
-        box-shadow: var(--primary-box-shadow);
+        box-shadow: $box-shadow;
+        scale: 1.03;
       }
     }
   }

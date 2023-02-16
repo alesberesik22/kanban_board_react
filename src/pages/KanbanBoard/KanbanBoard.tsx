@@ -45,7 +45,7 @@ const KanbanBoard = () => {
     }, [data, isSuccess])
 
     return (
-        <div className={`kanban_board ${fullScreen ? 'minimalized' : 'fullScreen'}`}>
+        <div className={`kanban_board fullScreen`}>
             <KanbanBoardHeader kabanBoardValues={kabanBoardValues} setKabanBoardValues={setKabanBoardValues}/>
             <div className="kaban_board_content_container">
                 <KanbanHeader setDisplayAddColumnKanban={setDisplayAddColumnKanban}/>
