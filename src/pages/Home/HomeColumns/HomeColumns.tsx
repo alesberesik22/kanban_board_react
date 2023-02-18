@@ -11,7 +11,7 @@ const HomeColumns:React.FC<props> = ({board}) => {
     return (
         <div className={"home_boards_body"}>
             {board.columns?.map((column) => (
-                <div className={"home_boards_body_columns"}>
+                <div className={"home_boards_body_columns"} key={column.id}>
                     <h4>{column.name}</h4>
                     <HomeColumnTask tasks={column.tasks!}/>
                 </div>

@@ -19,6 +19,7 @@ import {setRefetch} from "../../../redux/slices/ReduxStoreSlice";
 import MobileAddButton from "./Buttons/MobileAddButton/MobileAddButton";
 import MobileCancelButton from "./Buttons/MobileCancelButton/MobileCancelButton";
 import {useNavigate} from "react-router-dom";
+import kodiva from '../../../assets/images/kodiva_logo_white.png'
 
 interface props {
     open: boolean;
@@ -78,12 +79,17 @@ const NavbarPhone: React.FC<props> = ({open, setOpen, boards}) => {
                         <div className={"navbar_phone_logo"}>
                             <Hamburger toggled={open} toggle={setOpen}/>
                             <div className={"navbar_phone_image"}>
-                                <img src={logo} alt={"Kanban board"}/>
+                                <img src={kodiva} alt={"Kanban board"}/>
                             </div>
-                            <h2>Kanban app</h2>
+                            <h2>Kodiva kanban</h2>
                         </div>
                         <div className={"navbar_phone_content"}>
                             <div className={"navbar_phone_content_boards"}>
+                                <div className={"phone_kodiva_redirect"}
+                                     onClick={() => window.open("https://apps.kodiva.sk/", "_blank")}>
+                                    <a>Kodiva APPS</a>
+                                    <img src={kodiva} alt={"kodiva_apps"}/>
+                                </div>
                                 <div
                                     className={"navbar_phone_content_boards_display"}
                                     onClick={() => {

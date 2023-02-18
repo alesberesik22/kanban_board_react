@@ -24,6 +24,8 @@ import {setBoard, setFullscreen, setRefetch} from "../../redux/slices/ReduxStore
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
 import NavbarPhone from "./NavbarPhone/NavbarPhone";
 import {Twirl as Hamburger} from "hamburger-react";
+import kodiva from '../../assets/images/kodiva_logo_white.png'
+import kodivaLogo from '../../assets/images/kodiva_logo_simple.png'
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -83,6 +85,12 @@ const Navbar = () => {
         setRefetchBoardName(true);
     };
 
+    const handleBoardClickedSmallScreen = (name: string) => {
+        if (!fullScreen) {
+            dispatch(setBoard(name))
+        }
+    }
+
     useEffect(() => {
         if (isSuccess) {
             setBoards(data);
@@ -109,10 +117,15 @@ const Navbar = () => {
             <div className={`navbar ${fullScreen ? "full-width" : "small-width"}`}>
                 <div className="navbar_container">
                     <div className="logo" onClick={() => navigate("/")}>
-                        <img src={logo} alt="logo" className="logo_img"/>
-                        {fullScreen && <h2>Kanban app</h2>}
+                        <img src={kodiva} alt="logo" className="logo_img"/>
+                        {fullScreen && <h2>Kodiva</h2>}
                     </div>
                     <div className="kanban_boards">
+                        <div className={"kodiva_apps_redirect"}
+                             onClick={() => window.open("https://apps.kodiva.sk/", "_blank")}>
+                            {fullScreen ? <a>Kodiva APPS</a> : null}
+                            <img src={kodiva} alt={"kodiva_apps"}/>
+                        </div>
                         {isSuccess && (
                             <div
                                 onClick={() => {
@@ -143,14 +156,18 @@ const Navbar = () => {
                             {displayBoard &&
                                 boards &&
                                 boards.map((board: Board) => (
-                                    <div className={`kanban_element ${boardClicked === board.name ? "active" : ""}`} key={board.id}>
-                                        <div className="kanban_element_name_actions">
+                                    <div className={`kanban_element ${boardClicked === board.name ? "active" : ""}`}
+                                         key={board.id}>
+                                        <div className="kanban_element_name_actions"
+                                             onClick={() => handleBoardClickedSmallScreen(board.name!)}>
                                             {fullScreen ? (
                                                 <p
                                                     className={`kanban_element_name ${boardClicked === board.name ? "active-color" : ""}`}
-                                                    onClick={() => {navigate(`/kanban/${board.id!}`);
-                                                        dispatch(setBoard(board.name))}
-                                                }
+                                                    onClick={() => {
+                                                        navigate(`/kanban/${board.id!}`);
+                                                        dispatch(setBoard(board.name))
+                                                    }
+                                                    }
                                                 >
                                                     {fullScreen ? board.name : <ViewWeekIcon/>}
                                                 </p>
@@ -251,7 +268,7 @@ const Navbar = () => {
                                 setAddBoard((prev) => !prev);
                             }}
                         >
-                            <p className={"add_text"}>+</p>
+                            <p className={"add_text"}>{addBoard ? "-" : "+"}</p>
                             {fullScreen && <p className={"add_board_text"}>Add board</p>}
                         </div>
                         <div

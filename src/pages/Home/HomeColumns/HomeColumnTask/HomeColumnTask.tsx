@@ -10,7 +10,7 @@ const HomeColumnTask:React.FC<props> = ({tasks}) => {
     return (
         <div className={"home_boards_body_columns-column"}>
             {tasks.map((task) => (
-                <div className={"home_boards_body_columns-column-task"}>
+                <div className={"home_boards_body_columns-column-task"} key={task.id}>
                     <div className={`task_priority ${task.priority}`}/>
                     <p className="task_name">{task.name}</p>
                     <p className={"task_description"}>{task.description}</p>

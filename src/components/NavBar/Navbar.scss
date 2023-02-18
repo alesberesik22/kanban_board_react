@@ -22,8 +22,9 @@
       align-items: center;
       justify-content: flex-start;
       cursor: pointer;
+      gap: 1.5rem;
       .logo_img {
-        width: 30%;
+        width: 20%;
         height: 100%;
         object-fit: contain;
       }
@@ -39,6 +40,37 @@
       align-items: flex-start;
       justify-content: center;
       flex-direction: column;
+      .kodiva_apps_redirect{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        padding-bottom: 1.5rem;
+        cursor: pointer;
+        transition: var(--primary-transition);
+        a{
+          text-decoration: none;
+          color:white;
+          font-weight: 600;
+          letter-spacing: 0.03em;
+          transition: var(--primary-transition);
+        }
+        img{
+          width: 18px;
+          object-fit: contain;
+          transition: var(--primary-transition);
+        }
+        &:hover{
+          a{
+            color: var(--secondary-color);
+            scale: 1.05;
+          }
+          img{
+            scale: 1.05;
+          }
+        }
+      }
       .boards_header {
         width: 100%;
         font-size: 15px;
@@ -136,7 +168,7 @@
         .active{
           background-color: white;
           border-radius: 5px;
-          width: 115%;
+          width: 117%;
           color: var(--primary-color);
           .kanban_element_name{
             color: var(--primary-color)!important;
@@ -187,7 +219,7 @@
         gap: 2rem;
         cursor: pointer;
         p {
-          color: var(--primary-color);
+          color: white;
           font-weight: 600;
           letter-spacing: 0.03em;
           font-size: 16px;
@@ -244,6 +276,16 @@
   align-items: center !important;
   .navbar_container {
     .kanban_boards {
+      .kodiva_apps_redirect{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-right: 7px;
+        img{
+          width: 25px!important;
+          object-fit: contain;
+        }
+      }
       .boards_header {
         display: flex;
         width: 100%;
@@ -293,8 +335,11 @@
         }
         .kanban_board_elements {
           .kanban_element {
+            width: 2.2rem;
             .kanban_element_name_actions {
+              align-items: flex-start;
               padding: 0;
+              margin-top: 2px;
             }
           }
         }
@@ -339,6 +384,7 @@
       .navbar_settings_add_kanban {
         .add_kanban {
           .add_text {
+            color: white;
             font-size: 20px;
           }
           .add_board_text {
@@ -389,6 +435,7 @@
 //phone-settings
 @media screen and (max-width: 850px) {
   .navbar {
+    background-color: transparent;
     padding: 0;
     .navbar_container {
       display: none;

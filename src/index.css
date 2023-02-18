@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap");
 :root {
   --background-color: white;
-  --primary-color: #6962c9;
-  --secondary-color: #8886d4;
+  --primary-color: #008db9;
+  --secondary-color: #0dcaf0;
   --third-color: #b6b0e1;
   --primary-transition: all 250ms ease-in-out;
   --primary-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07),

@@ -4,15 +4,15 @@
   outline: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: var(--primary-color);
-  color: white;
+  background-color: white;
+  color: var(--primary-color);
   font-weight: bold;
   letter-spacing: 0.03em;
   transition: var(--primary-transition);
   overflow: visible;
   z-index: 2;
   &:hover {
-    transform: scale(1.05);
     background-color: var(--secondary-color);
+    color: white;
   }
 }
