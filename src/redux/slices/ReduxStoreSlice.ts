@@ -2,7 +2,8 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     fullscreen:true,
-    refetch:false
+    refetch:false,
+    board:"",
 }
 
 export const reduxStoreSlice = createSlice({
@@ -14,10 +15,13 @@ export const reduxStoreSlice = createSlice({
         },
         setRefetch: (state, action) => {
             state.refetch = action.payload
+        },
+        setBoard:(state,action) => {
+            state.board = action.payload
         }
     }
 })
 
-export const {setFullscreen,setRefetch} = reduxStoreSlice.actions;
+export const {setFullscreen,setRefetch,setBoard} = reduxStoreSlice.actions;
 
 export default reduxStoreSlice.reducer;

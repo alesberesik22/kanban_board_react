@@ -18,7 +18,7 @@ const Home = () => {
     return <div className={`home ${fullScreen ? "home_full_width" : 'home_full_width_small-width'}`}>
         {data && (
             data.map((board: Board) => (
-                <div className={"home_boards"} onClick={()=>navigate(`/kanban/${board.id}`)}>
+                <div className={"home_boards"} onClick={()=>navigate(`/kanban/${board.id}`)} key={board.id}>
                     <h2 className={"home_boards_name"}>{board.name}</h2>
                     <HomeColumns board={board}/>
                 </div>

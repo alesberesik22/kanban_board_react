@@ -1,0 +1,17 @@
+.mobile_add_button{
+  background-color: white;
+  outline: none;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  font-size: 16px;
+  border-radius: 5px;
+  color: var(--primary-color);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: var(--primary-transition);
+  &:hover{
+    scale: 1.05;
+    color: white;
+    background-color: var(--secondary-color);
+  }
+}

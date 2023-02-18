@@ -7,6 +7,7 @@
   position: sticky;
   top: 0;
   left: 0;
+  background-color: var(--primary-color);
   .navbar_container {
     width: 100%;
     display: flex;
@@ -29,7 +30,7 @@
       h2 {
         width: 50%;
         font-size: 18px;
-        color: var(--primary-color);
+        color: white;
       }
     }
     .kanban_boards {
@@ -47,7 +48,7 @@
         align-items: center;
         transition: var(--primary-transition);
         cursor: pointer;
-        color: #9b9baa;
+        color: black;
         &:hover {
           scale: 1.05;
         }
@@ -69,6 +70,7 @@
           gap: 0.5rem;
           cursor: pointer;
           transition: var(--primary-transition);
+          position: relative;
           .kaban_element_edit_input {
             width: 100%;
             input {
@@ -95,6 +97,7 @@
               font-weight: 500;
               letter-spacing: 0.03em;
               transition: var(--primary-transition);
+              color: white;
             }
             .kanban_element_actions {
               display: flex;
@@ -112,9 +115,9 @@
               }
             }
             &:hover {
-              background-color: var(--third-color);
+              background-color: white;
               .kanban_element_name {
-                color: white;
+                color: var(--primary-color);
               }
               .kanban_element_actions {
                 .kanbban_element_actions_edit {
@@ -127,6 +130,19 @@
                   color: greenyellow;
                 }
               }
+            }
+          }
+        }
+        .active{
+          background-color: white;
+          border-radius: 5px;
+          width: 115%;
+          color: var(--primary-color);
+          .kanban_element_name{
+            color: var(--primary-color)!important;
+          }
+          .kanban_element_name{
+            .kanban_element_name_actions{
             }
           }
         }
@@ -208,6 +224,13 @@
       }
     }
   }
+  .navbar_toggle {
+    position: sticky;
+    top: 25px;
+    width: 20px;
+    height: 20px;
+    display: none;
+  }
 }
 .full-width {
   transition: var(--primary-transition);
@@ -216,21 +239,19 @@
 }
 .small-width {
   transition: var(--primary-transition);
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 2rem 20px;
   width: 5.5%;
   align-items: center !important;
   .navbar_container {
     .kanban_boards {
-      .boards_header{
+      .boards_header {
         display: flex;
         width: 100%;
         align-items: center;
         justify-content: center;
-        .boards_header-drop-down{
+        .boards_header-drop-down {
           //margin-right: 10px;
+          color: black;
         }
       }
       p {
@@ -260,29 +281,52 @@
     }
   }
 }
-@media screen and (max-width: 1300px){
-  .navbar{
+//large screen
+@media screen and (min-width: 1301px) {
+  .small-width {
+    .navbar_container {
+      .kanban_boards {
+        .boards_header {
+          justify-content: flex-start;
+          margin-left: 5px;
+          color: black;
+        }
+        .kanban_board_elements {
+          .kanban_element {
+            .kanban_element_name_actions {
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+//tablet size
+@media screen and (max-width: 1300px) {
+  .navbar {
     padding: 1rem;
-    .navbar_container{
-      .logo{
-        h2{
+    .navbar_container {
+      .logo {
+        h2 {
           font-size: 14px;
           width: 70%;
         }
       }
-      .kanban_boards{
-        .boards_header{
+      .kanban_boards {
+        .boards_header {
           font-size: 13px;
+          color: black;
         }
-        .kanban_board_elements{
-          .kanban_element{
-            .kanban_element_name_actions{
-              .kanban_element_name{
+        .kanban_board_elements {
+          .kanban_element {
+            .kanban_element_name_actions {
+              .kanban_element_name {
                 font-size: 12px;
               }
-              .kanban_element_actions{
+              .kanban_element_actions {
                 gap: 0.2rem;
-                svg{
+                svg {
                   font-size: 14px;
                 }
               }
@@ -291,42 +335,43 @@
         }
       }
     }
-    .navbar_settings{
-      .navbar_settings_add_kanban{
-        .add_kanban{
-          .add_text{
+    .navbar_settings {
+      .navbar_settings_add_kanban {
+        .add_kanban {
+          .add_text {
             font-size: 20px;
           }
-          .add_board_text{
+          .add_board_text {
             font-size: 14px;
           }
         }
       }
-      .hide_nav_bar{
-        p{
+      .hide_nav_bar {
+        p {
           font-size: 14px;
         }
-        svg{
-          font-size:20px
+        svg {
+          font-size: 20px;
         }
       }
     }
   }
-  .small-width{
+  .small-width {
     padding: 10px;
-    .navbar_container{
+    .navbar_container {
       align-items: center;
       justify-content: center;
-      .kanban_boards{
-        .boards_header{
+      .kanban_boards {
+        .boards_header {
           justify-content: flex-start;
+          color:black;
         }
-        .kanban_board_elements{
-          .kanban_element{
-            .kanban_element_name_actions{
+        .kanban_board_elements {
+          .kanban_element {
+            .kanban_element_name_actions {
               padding: 5px 0;
-              .kanban_element_name{
-                svg{
+              .kanban_element_name {
+                svg {
                   margin-left: 0;
                 }
               }
@@ -335,9 +380,24 @@
         }
       }
     }
-    .navbar_settings{
+    .navbar_settings {
       align-items: center;
       justify-content: center;
+    }
+  }
+}
+//phone-settings
+@media screen and (max-width: 850px) {
+  .navbar {
+    padding: 0;
+    .navbar_container {
+      display: none;
+    }
+    .navbar_settings {
+      display: none;
+    }
+    .navbar_toggle {
+      display: flex;
     }
   }
 }

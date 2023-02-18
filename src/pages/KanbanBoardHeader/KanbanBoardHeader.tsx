@@ -23,7 +23,7 @@ const KanbanBoardHeader: React.FC<Props> = ({kabanBoardValues, setKabanBoardValu
             <div className="kanban_board_header_input">
                 <input
                     className="header-input"
-                    value={kabanBoardValues?.name}
+                    value={kabanBoardValues?.name === undefined ? "" : kabanBoardValues.name}
                     onChange={(e) =>
                         setKabanBoardValues({...kabanBoardValues, name: e.target.value})
                     }

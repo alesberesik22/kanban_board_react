@@ -6,6 +6,7 @@
   flex-direction: column;
   gap: 1.5rem;
   overflow-y: scroll;
+  z-index: 0;
 
   .home_boards {
     width: 100%;
@@ -68,4 +69,9 @@
 }
 ::-webkit-scrollbar{
   display: none ;
+}
+@media screen and (max-width: 850px) {
+  .home{
+    padding: 2rem 1rem;
+  }
 }

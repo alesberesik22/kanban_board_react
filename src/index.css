@@ -21,6 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
+  font-family: 'Open Sans', sans-serif;
 }
 p {
   color: #9b9baa;
