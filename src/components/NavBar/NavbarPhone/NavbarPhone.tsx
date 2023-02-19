@@ -15,7 +15,7 @@ import {
     useUpdateBoardNameMutation,
 } from "../../../api/boardApi";
 import {useDispatch} from "react-redux";
-import {setRefetch} from "../../../redux/slices/ReduxStoreSlice";
+import {setBoard, setRefetch} from "../../../redux/slices/ReduxStoreSlice";
 import MobileAddButton from "./Buttons/MobileAddButton/MobileAddButton";
 import MobileCancelButton from "./Buttons/MobileCancelButton/MobileCancelButton";
 import {useNavigate} from "react-router-dom";
@@ -40,7 +40,7 @@ const NavbarPhone: React.FC<props> = ({open, setOpen, boards}) => {
 
     const [deleteBoardMutation] = useDeleteBoardMutation();
     const [updateBoardName] = useUpdateBoardNameMutation();
-    const [updateBoardMutation] = useAddBoardMutation()
+    const [updateBoardMutation] = useAddBoardMutation();
 
     const dispatch = useDispatch();
 
@@ -123,6 +123,7 @@ const NavbarPhone: React.FC<props> = ({open, setOpen, boards}) => {
                                                         <div className="navbar_phone_content_boards_element_text"
                                                              onClick={() => {
                                                                  navigate(`/kanban/${board.id}`);
+                                                                 dispatch(setBoard(board.name));
                                                                  setOpen(false)
                                                              }
                                                              }>

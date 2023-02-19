@@ -116,7 +116,11 @@ const Navbar = () => {
         <>
             <div className={`navbar ${fullScreen ? "full-width" : "small-width"}`}>
                 <div className="navbar_container">
-                    <div className="logo" onClick={() => navigate("/")}>
+                    <div className="logo" onClick={() => {
+                        dispatch(setBoard(""))
+                        navigate("/home")
+                    }
+                    }>
                         <img src={kodiva} alt="logo" className="logo_img"/>
                         {fullScreen && <h2>Kodiva</h2>}
                     </div>

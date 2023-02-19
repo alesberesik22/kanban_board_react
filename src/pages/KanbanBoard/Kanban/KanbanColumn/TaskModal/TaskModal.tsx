@@ -39,11 +39,13 @@ const TaskModal: React.FC<props> = (props) => {
         event.preventDefault();
         updateTask(task!);
         dispatch(setRefetch(true));
+        props.setOpen(false);
     }
     const handleDelete = () => {
         let updatedColumn = {...props.column};
         updatedColumn.tasks = updatedColumn.tasks?.filter(task=>task.id !== props.id);
         updateColumnMutation(updatedColumn);
+        dispatch(setRefetch(true))
     }
     return (
         <Modal open={props.open} onClose={handleClose}>

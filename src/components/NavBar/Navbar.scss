@@ -279,8 +279,8 @@
       .kodiva_apps_redirect{
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding-right: 7px;
+        justify-content: flex-start;
+        padding-left: 7px;
         img{
           width: 25px!important;
           object-fit: contain;

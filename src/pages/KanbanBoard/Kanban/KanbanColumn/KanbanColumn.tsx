@@ -50,7 +50,9 @@ const KanbanColumn: React.FC<props> = ({column, id, setAddTask, setAddTaskColumn
                                         <KanbanCard content={tasks.name} columnId={tasks.id!}
                                                     index={index} key={index}
                                                     description={tasks.description} priority={tasks.priority!}
-                                                    setDisplayTask={setDisplayTask} setClickedTask={setClickedTaskId}/>
+                                                    setDisplayTask={setDisplayTask} setClickedTask={setClickedTaskId}
+                                                    assignedUser={tasks.assignedUser}
+                                        />
                                     ))}
                                 {provided.placeholder}
                             </div>

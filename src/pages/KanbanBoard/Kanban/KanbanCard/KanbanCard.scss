@@ -1,4 +1,4 @@
-$height:140px;
+$height:180px;
 .kanban_card{
   user-select: none;
   padding: 16px;
@@ -32,6 +32,15 @@ $height:140px;
   }
   &:hover{
     box-shadow: var(--primary-box-shadow);
+  }
+  .kanban_card_user{
+    margin-top: 5px;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    color: var(--secondary-color);
+    border-radius: 3px;
+    padding: 3px 7px;
+    border: 1px solid rgba(155, 155, 170, 0.25);
   }
 }
 .dragging {
